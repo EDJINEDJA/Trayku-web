@@ -1,0 +1,85 @@
+{
+  "review": {
+    "columns": {
+      "id": {
+        "type": "text",
+        "nullable": false,
+        "primary": true
+      },
+      "mission_id": {
+        "type": "text",
+        "nullable": false
+      },
+      "author_id": {
+        "type": "text",
+        "nullable": false
+      },
+      "target_id": {
+        "type": "text",
+        "nullable": false
+      },
+      "role": {
+        "type": "text",
+        "nullable": false,
+        "enum": [
+          "traveler",
+          "requester"
+        ]
+      },
+      "rating": {
+        "type": "integer",
+        "nullable": false
+      },
+      "comment": {
+        "type": "text",
+        "nullable": true
+      },
+      "created_at": {
+        "type": "timestamptz",
+        "nullable": false,
+        "default": "now()"
+      },
+      "updated_at": {
+        "type": "timestamptz",
+        "nullable": false,
+        "default": "now()"
+      },
+      "deleted_at": {
+        "type": "timestamptz",
+        "nullable": true
+      }
+    },
+    "indexes": {
+      "IDX_review_mission_id": {
+        "columns": [
+          "mission_id"
+        ],
+        "unique": false,
+        "where": "deleted_at IS NULL"
+      },
+      "IDX_review_target_id": {
+        "columns": [
+          "target_id"
+        ],
+        "unique": false,
+        "where": "deleted_at IS NULL"
+      },
+      "IDX_review_deleted_at": {
+        "columns": [
+          "deleted_at"
+        ],
+        "unique": false,
+        "where": "deleted_at IS NOT NULL"
+      },
+      "IDX_review_mission_id_author_id_target_id_unique": {
+        "columns": [
+          "mission_id",
+          "author_id",
+          "target_id"
+        ],
+        "unique": true,
+        "where": "deleted_at IS NULL"
+      }
+    }
+  }
+}

@@ -1,0 +1,162 @@
+{
+  "conversation": {
+    "columns": {
+      "id": {
+        "type": "text",
+        "nullable": false,
+        "primary": true
+      },
+      "mission_id": {
+        "type": "text",
+        "nullable": false
+      },
+      "member_a": {
+        "type": "text",
+        "nullable": false
+      },
+      "member_b": {
+        "type": "text",
+        "nullable": false
+      },
+      "blocked_by": {
+        "type": "text",
+        "nullable": true
+      },
+      "reported_at": {
+        "type": "timestamptz",
+        "nullable": true
+      },
+      "reported_by": {
+        "type": "text",
+        "nullable": true
+      },
+      "created_at": {
+        "type": "timestamptz",
+        "nullable": false,
+        "default": "now()"
+      },
+      "updated_at": {
+        "type": "timestamptz",
+        "nullable": false,
+        "default": "now()"
+      },
+      "deleted_at": {
+        "type": "timestamptz",
+        "nullable": true
+      }
+    },
+    "indexes": {
+      "IDX_conversation_mission_id": {
+        "columns": [
+          "mission_id"
+        ],
+        "unique": false,
+        "where": "deleted_at IS NULL"
+      },
+      "IDX_conversation_member_a": {
+        "columns": [
+          "member_a"
+        ],
+        "unique": false,
+        "where": "deleted_at IS NULL"
+      },
+      "IDX_conversation_member_b": {
+        "columns": [
+          "member_b"
+        ],
+        "unique": false,
+        "where": "deleted_at IS NULL"
+      },
+      "IDX_conversation_deleted_at": {
+        "columns": [
+          "deleted_at"
+        ],
+        "unique": false,
+        "where": "deleted_at IS NOT NULL"
+      },
+      "IDX_conversation_mission_id_member_b_unique": {
+        "columns": [
+          "mission_id",
+          "member_b"
+        ],
+        "unique": true,
+        "where": "deleted_at IS NULL"
+      }
+    }
+  },
+  "message": {
+    "columns": {
+      "id": {
+        "type": "text",
+        "nullable": false,
+        "primary": true
+      },
+      "conversation_id": {
+        "type": "text",
+        "nullable": false,
+        "references": {
+          "table": "conversation",
+          "column": "id",
+          "onDelete": "cascade"
+        }
+      },
+      "sender_id": {
+        "type": "text",
+        "nullable": true
+      },
+      "kind": {
+        "type": "text",
+        "nullable": false,
+        "default": "'text'",
+        "enum": [
+          "text",
+          "photo",
+          "system"
+        ]
+      },
+      "body": {
+        "type": "text",
+        "nullable": false,
+        "default": "''"
+      },
+      "file_id": {
+        "type": "text",
+        "nullable": true
+      },
+      "read_at": {
+        "type": "timestamptz",
+        "nullable": true
+      },
+      "created_at": {
+        "type": "timestamptz",
+        "nullable": false,
+        "default": "now()"
+      },
+      "updated_at": {
+        "type": "timestamptz",
+        "nullable": false,
+        "default": "now()"
+      },
+      "deleted_at": {
+        "type": "timestamptz",
+        "nullable": true
+      }
+    },
+    "indexes": {
+      "IDX_message_conversation_id": {
+        "columns": [
+          "conversation_id"
+        ],
+        "unique": false,
+        "where": "deleted_at IS NULL"
+      },
+      "IDX_message_deleted_at": {
+        "columns": [
+          "deleted_at"
+        ],
+        "unique": false,
+        "where": "deleted_at IS NOT NULL"
+      }
+    }
+  }
+}

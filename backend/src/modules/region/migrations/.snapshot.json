@@ -1,0 +1,106 @@
+{
+  "region": {
+    "columns": {
+      "id": {
+        "type": "text",
+        "nullable": false,
+        "primary": true
+      },
+      "name": {
+        "type": "text",
+        "nullable": false
+      },
+      "currency_code": {
+        "type": "text",
+        "nullable": false
+      },
+      "metadata": {
+        "type": "jsonb",
+        "nullable": true
+      },
+      "created_at": {
+        "type": "timestamptz",
+        "nullable": false,
+        "default": "now()"
+      },
+      "updated_at": {
+        "type": "timestamptz",
+        "nullable": false,
+        "default": "now()"
+      },
+      "deleted_at": {
+        "type": "timestamptz",
+        "nullable": true
+      }
+    },
+    "indexes": {
+      "IDX_region_deleted_at": {
+        "columns": [
+          "deleted_at"
+        ],
+        "unique": false,
+        "where": "deleted_at IS NOT NULL"
+      }
+    }
+  },
+  "country": {
+    "columns": {
+      "iso_2": {
+        "type": "text",
+        "nullable": false,
+        "primary": true
+      },
+      "name": {
+        "type": "text",
+        "nullable": false
+      },
+      "display_name": {
+        "type": "text",
+        "nullable": false
+      },
+      "dial": {
+        "type": "text",
+        "nullable": true
+      },
+      "region_id": {
+        "type": "text",
+        "nullable": true,
+        "references": {
+          "table": "region",
+          "column": "id",
+          "onDelete": "set null"
+        }
+      },
+      "created_at": {
+        "type": "timestamptz",
+        "nullable": false,
+        "default": "now()"
+      },
+      "updated_at": {
+        "type": "timestamptz",
+        "nullable": false,
+        "default": "now()"
+      },
+      "deleted_at": {
+        "type": "timestamptz",
+        "nullable": true
+      }
+    },
+    "indexes": {
+      "IDX_country_region_id": {
+        "columns": [
+          "region_id"
+        ],
+        "unique": false,
+        "where": "deleted_at IS NULL"
+      },
+      "IDX_country_deleted_at": {
+        "columns": [
+          "deleted_at"
+        ],
+        "unique": false,
+        "where": "deleted_at IS NOT NULL"
+      }
+    }
+  }
+}

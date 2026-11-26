@@ -1,0 +1,71 @@
+{
+  "brand": {
+    "columns": {
+      "id": {
+        "type": "text",
+        "nullable": false,
+        "primary": true
+      },
+      "name": {
+        "type": "text",
+        "nullable": false
+      },
+      "key": {
+        "type": "text",
+        "nullable": false
+      },
+      "kind": {
+        "type": "text",
+        "nullable": false,
+        "default": "'other'",
+        "enum": [
+          "store",
+          "relay",
+          "drive",
+          "pressing",
+          "other"
+        ]
+      },
+      "uses": {
+        "type": "integer",
+        "nullable": false,
+        "default": "0"
+      },
+      "listed": {
+        "type": "boolean",
+        "nullable": false,
+        "default": "false"
+      },
+      "created_at": {
+        "type": "timestamptz",
+        "nullable": false,
+        "default": "now()"
+      },
+      "updated_at": {
+        "type": "timestamptz",
+        "nullable": false,
+        "default": "now()"
+      },
+      "deleted_at": {
+        "type": "timestamptz",
+        "nullable": true
+      }
+    },
+    "indexes": {
+      "IDX_brand_key_unique": {
+        "columns": [
+          "key"
+        ],
+        "unique": true,
+        "where": "deleted_at IS NULL"
+      },
+      "IDX_brand_deleted_at": {
+        "columns": [
+          "deleted_at"
+        ],
+        "unique": false,
+        "where": "deleted_at IS NOT NULL"
+      }
+    }
+  }
+}

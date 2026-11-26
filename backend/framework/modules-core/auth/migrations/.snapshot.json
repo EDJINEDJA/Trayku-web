@@ -1,0 +1,170 @@
+{
+  "auth_identity": {
+    "columns": {
+      "id": {
+        "type": "text",
+        "nullable": false,
+        "primary": true
+      },
+      "app_metadata": {
+        "type": "jsonb",
+        "nullable": true
+      },
+      "tokens_revoked_at": {
+        "type": "timestamptz",
+        "nullable": true
+      },
+      "created_at": {
+        "type": "timestamptz",
+        "nullable": false,
+        "default": "now()"
+      },
+      "updated_at": {
+        "type": "timestamptz",
+        "nullable": false,
+        "default": "now()"
+      },
+      "deleted_at": {
+        "type": "timestamptz",
+        "nullable": true
+      }
+    },
+    "indexes": {
+      "IDX_auth_identity_deleted_at": {
+        "columns": [
+          "deleted_at"
+        ],
+        "unique": false,
+        "where": "deleted_at IS NOT NULL"
+      }
+    }
+  },
+  "provider_identity": {
+    "columns": {
+      "id": {
+        "type": "text",
+        "nullable": false,
+        "primary": true
+      },
+      "entity_id": {
+        "type": "text",
+        "nullable": false
+      },
+      "provider": {
+        "type": "text",
+        "nullable": false
+      },
+      "auth_identity_id": {
+        "type": "text",
+        "nullable": false,
+        "references": {
+          "table": "auth_identity",
+          "column": "id",
+          "onDelete": "cascade"
+        }
+      },
+      "provider_metadata": {
+        "type": "jsonb",
+        "nullable": true
+      },
+      "created_at": {
+        "type": "timestamptz",
+        "nullable": false,
+        "default": "now()"
+      },
+      "updated_at": {
+        "type": "timestamptz",
+        "nullable": false,
+        "default": "now()"
+      },
+      "deleted_at": {
+        "type": "timestamptz",
+        "nullable": true
+      }
+    },
+    "indexes": {
+      "IDX_provider_identity_auth_identity_id": {
+        "columns": [
+          "auth_identity_id"
+        ],
+        "unique": false,
+        "where": "deleted_at IS NULL"
+      },
+      "IDX_provider_identity_deleted_at": {
+        "columns": [
+          "deleted_at"
+        ],
+        "unique": false,
+        "where": "deleted_at IS NOT NULL"
+      },
+      "IDX_provider_identity_entity_id_provider_unique": {
+        "columns": [
+          "entity_id",
+          "provider"
+        ],
+        "unique": true,
+        "where": "deleted_at IS NULL"
+      }
+    }
+  },
+  "otp_code": {
+    "columns": {
+      "id": {
+        "type": "text",
+        "nullable": false,
+        "primary": true
+      },
+      "phone": {
+        "type": "text",
+        "nullable": false
+      },
+      "code_hash": {
+        "type": "text",
+        "nullable": false
+      },
+      "expires_at": {
+        "type": "timestamptz",
+        "nullable": false
+      },
+      "attempts": {
+        "type": "integer",
+        "nullable": false,
+        "default": "0"
+      },
+      "consumed_at": {
+        "type": "timestamptz",
+        "nullable": true
+      },
+      "created_at": {
+        "type": "timestamptz",
+        "nullable": false,
+        "default": "now()"
+      },
+      "updated_at": {
+        "type": "timestamptz",
+        "nullable": false,
+        "default": "now()"
+      },
+      "deleted_at": {
+        "type": "timestamptz",
+        "nullable": true
+      }
+    },
+    "indexes": {
+      "IDX_otp_code_phone": {
+        "columns": [
+          "phone"
+        ],
+        "unique": false,
+        "where": "deleted_at IS NULL"
+      },
+      "IDX_otp_code_deleted_at": {
+        "columns": [
+          "deleted_at"
+        ],
+        "unique": false,
+        "where": "deleted_at IS NOT NULL"
+      }
+    }
+  }
+}

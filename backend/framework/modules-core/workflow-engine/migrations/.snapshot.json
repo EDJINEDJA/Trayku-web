@@ -1,0 +1,106 @@
+{
+  "workflow_execution": {
+    "columns": {
+      "id": {
+        "type": "text",
+        "nullable": false,
+        "primary": true
+      },
+      "workflow_id": {
+        "type": "text",
+        "nullable": false
+      },
+      "transaction_id": {
+        "type": "text",
+        "nullable": false
+      },
+      "parent_transaction_id": {
+        "type": "text",
+        "nullable": true
+      },
+      "state": {
+        "type": "text",
+        "nullable": false,
+        "enum": [
+          "running",
+          "done",
+          "compensating",
+          "compensated",
+          "failed"
+        ]
+      },
+      "input": {
+        "type": "jsonb",
+        "nullable": true
+      },
+      "steps": {
+        "type": "jsonb",
+        "nullable": false,
+        "default": "'[]'::jsonb"
+      },
+      "error": {
+        "type": "text",
+        "nullable": true
+      },
+      "owner": {
+        "type": "text",
+        "nullable": false
+      },
+      "finished_at": {
+        "type": "timestamptz",
+        "nullable": true
+      },
+      "created_at": {
+        "type": "timestamptz",
+        "nullable": false,
+        "default": "now()"
+      },
+      "updated_at": {
+        "type": "timestamptz",
+        "nullable": false,
+        "default": "now()"
+      },
+      "deleted_at": {
+        "type": "timestamptz",
+        "nullable": true
+      }
+    },
+    "indexes": {
+      "IDX_workflow_execution_workflow_id": {
+        "columns": [
+          "workflow_id"
+        ],
+        "unique": false,
+        "where": "deleted_at IS NULL"
+      },
+      "IDX_workflow_execution_transaction_id_unique": {
+        "columns": [
+          "transaction_id"
+        ],
+        "unique": true,
+        "where": "deleted_at IS NULL"
+      },
+      "IDX_workflow_execution_parent_transaction_id": {
+        "columns": [
+          "parent_transaction_id"
+        ],
+        "unique": false,
+        "where": "deleted_at IS NULL"
+      },
+      "IDX_workflow_execution_state": {
+        "columns": [
+          "state"
+        ],
+        "unique": false,
+        "where": "deleted_at IS NULL"
+      },
+      "IDX_workflow_execution_deleted_at": {
+        "columns": [
+          "deleted_at"
+        ],
+        "unique": false,
+        "where": "deleted_at IS NOT NULL"
+      }
+    }
+  }
+}

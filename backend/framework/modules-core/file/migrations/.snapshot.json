@@ -1,0 +1,77 @@
+{
+  "file": {
+    "columns": {
+      "id": {
+        "type": "text",
+        "nullable": false,
+        "primary": true
+      },
+      "key": {
+        "type": "text",
+        "nullable": false
+      },
+      "filename": {
+        "type": "text",
+        "nullable": false
+      },
+      "mime_type": {
+        "type": "text",
+        "nullable": false
+      },
+      "size": {
+        "type": "integer",
+        "nullable": false
+      },
+      "owner_id": {
+        "type": "text",
+        "nullable": true
+      },
+      "visibility": {
+        "type": "text",
+        "nullable": false,
+        "default": "'private'",
+        "enum": [
+          "private",
+          "public"
+        ]
+      },
+      "created_at": {
+        "type": "timestamptz",
+        "nullable": false,
+        "default": "now()"
+      },
+      "updated_at": {
+        "type": "timestamptz",
+        "nullable": false,
+        "default": "now()"
+      },
+      "deleted_at": {
+        "type": "timestamptz",
+        "nullable": true
+      }
+    },
+    "indexes": {
+      "IDX_file_key_unique": {
+        "columns": [
+          "key"
+        ],
+        "unique": true,
+        "where": "deleted_at IS NULL"
+      },
+      "IDX_file_owner_id": {
+        "columns": [
+          "owner_id"
+        ],
+        "unique": false,
+        "where": "deleted_at IS NULL"
+      },
+      "IDX_file_deleted_at": {
+        "columns": [
+          "deleted_at"
+        ],
+        "unique": false,
+        "where": "deleted_at IS NOT NULL"
+      }
+    }
+  }
+}

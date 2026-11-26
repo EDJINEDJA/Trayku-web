@@ -1,0 +1,84 @@
+{
+  "api_key": {
+    "columns": {
+      "id": {
+        "type": "text",
+        "nullable": false,
+        "primary": true
+      },
+      "token": {
+        "type": "text",
+        "nullable": false
+      },
+      "redacted": {
+        "type": "text",
+        "nullable": false
+      },
+      "title": {
+        "type": "text",
+        "nullable": false
+      },
+      "type": {
+        "type": "text",
+        "nullable": false,
+        "enum": [
+          "publishable",
+          "secret"
+        ]
+      },
+      "last_used_at": {
+        "type": "timestamptz",
+        "nullable": true
+      },
+      "created_by": {
+        "type": "text",
+        "nullable": false
+      },
+      "revoked_by": {
+        "type": "text",
+        "nullable": true
+      },
+      "revoked_at": {
+        "type": "timestamptz",
+        "nullable": true
+      },
+      "created_at": {
+        "type": "timestamptz",
+        "nullable": false,
+        "default": "now()"
+      },
+      "updated_at": {
+        "type": "timestamptz",
+        "nullable": false,
+        "default": "now()"
+      },
+      "deleted_at": {
+        "type": "timestamptz",
+        "nullable": true
+      }
+    },
+    "indexes": {
+      "IDX_api_key_token_unique": {
+        "columns": [
+          "token"
+        ],
+        "unique": true,
+        "where": "deleted_at IS NULL"
+      },
+      "IDX_api_key_type": {
+        "columns": [
+          "type"
+        ],
+        "unique": false,
+        "where": "deleted_at IS NULL"
+      },
+      "IDX_api_key_deleted_at": {
+        "columns": [
+          "deleted_at"
+        ],
+        "unique": false,
+        "where": "deleted_at IS NOT NULL"
+      }
+    }
+  }
+}

@@ -1,0 +1,57 @@
+{
+  "price_scale": {
+    "columns": {
+      "id": {
+        "type": "text",
+        "nullable": false,
+        "primary": true
+      },
+      "region_id": {
+        "type": "text",
+        "nullable": false
+      },
+      "data": {
+        "type": "jsonb",
+        "nullable": false
+      },
+      "updated_by": {
+        "type": "text",
+        "nullable": true
+      },
+      "note": {
+        "type": "text",
+        "nullable": true
+      },
+      "created_at": {
+        "type": "timestamptz",
+        "nullable": false,
+        "default": "now()"
+      },
+      "updated_at": {
+        "type": "timestamptz",
+        "nullable": false,
+        "default": "now()"
+      },
+      "deleted_at": {
+        "type": "timestamptz",
+        "nullable": true
+      }
+    },
+    "indexes": {
+      "IDX_price_scale_region_id": {
+        "columns": [
+          "region_id"
+        ],
+        "unique": false,
+        "where": "deleted_at IS NULL"
+      },
+      "IDX_price_scale_deleted_at": {
+        "columns": [
+          "deleted_at"
+        ],
+        "unique": false,
+        "where": "deleted_at IS NOT NULL"
+      }
+    }
+  }
+}

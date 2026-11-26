@@ -1,0 +1,79 @@
+{
+  "notification": {
+    "columns": {
+      "id": {
+        "type": "text",
+        "nullable": false,
+        "primary": true
+      },
+      "to": {
+        "type": "text",
+        "nullable": false
+      },
+      "channel": {
+        "type": "text",
+        "nullable": false
+      },
+      "template": {
+        "type": "text",
+        "nullable": false
+      },
+      "data": {
+        "type": "jsonb",
+        "nullable": true
+      },
+      "provider_id": {
+        "type": "text",
+        "nullable": false
+      },
+      "status": {
+        "type": "text",
+        "nullable": false,
+        "default": "'pending'",
+        "enum": [
+          "pending",
+          "success",
+          "failure"
+        ]
+      },
+      "external_id": {
+        "type": "text",
+        "nullable": true
+      },
+      "error": {
+        "type": "text",
+        "nullable": true
+      },
+      "created_at": {
+        "type": "timestamptz",
+        "nullable": false,
+        "default": "now()"
+      },
+      "updated_at": {
+        "type": "timestamptz",
+        "nullable": false,
+        "default": "now()"
+      },
+      "deleted_at": {
+        "type": "timestamptz",
+        "nullable": true
+      }
+    },
+    "indexes": {
+      "IDX_notification_to": {
+        "columns": [
+          "to"
+        ],
+        "unique": false,
+        "where": "deleted_at IS NULL"
+      },
+      "IDX_notification_deleted_at": {
+        "columns": [
+          "deleted_at"
+        ],
+        "unique": false,
+        "where": "deleted_at IS NOT NULL"
+      }
+    }
+  }
+}

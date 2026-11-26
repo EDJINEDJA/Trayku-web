@@ -1,0 +1,119 @@
+{
+  "payment": {
+    "columns": {
+      "id": {
+        "type": "text",
+        "nullable": false,
+        "primary": true
+      },
+      "resource_id": {
+        "type": "text",
+        "nullable": false
+      },
+      "payer_id": {
+        "type": "text",
+        "nullable": true
+      },
+      "provider_id": {
+        "type": "text",
+        "nullable": false
+      },
+      "mode": {
+        "type": "text",
+        "nullable": false,
+        "enum": [
+          "test",
+          "live"
+        ]
+      },
+      "amount": {
+        "type": "numeric",
+        "nullable": false
+      },
+      "currency_code": {
+        "type": "text",
+        "nullable": false
+      },
+      "status": {
+        "type": "text",
+        "nullable": false,
+        "default": "'pending'",
+        "enum": [
+          "pending",
+          "authorized",
+          "captured",
+          "canceled",
+          "error"
+        ]
+      },
+      "captured_amount": {
+        "type": "numeric",
+        "nullable": false,
+        "default": "0"
+      },
+      "refunded_amount": {
+        "type": "numeric",
+        "nullable": false,
+        "default": "0"
+      },
+      "data": {
+        "type": "jsonb",
+        "nullable": false,
+        "default": "'{}'::jsonb"
+      },
+      "error": {
+        "type": "text",
+        "nullable": true
+      },
+      "authorized_at": {
+        "type": "timestamptz",
+        "nullable": true
+      },
+      "captured_at": {
+        "type": "timestamptz",
+        "nullable": true
+      },
+      "canceled_at": {
+        "type": "timestamptz",
+        "nullable": true
+      },
+      "created_at": {
+        "type": "timestamptz",
+        "nullable": false,
+        "default": "now()"
+      },
+      "updated_at": {
+        "type": "timestamptz",
+        "nullable": false,
+        "default": "now()"
+      },
+      "deleted_at": {
+        "type": "timestamptz",
+        "nullable": true
+      }
+    },
+    "indexes": {
+      "IDX_payment_resource_id": {
+        "columns": [
+          "resource_id"
+        ],
+        "unique": false,
+        "where": "deleted_at IS NULL"
+      },
+      "IDX_payment_status": {
+        "columns": [
+          "status"
+        ],
+        "unique": false,
+        "where": "deleted_at IS NULL"
+      },
+      "IDX_payment_deleted_at": {
+        "columns": [
+          "deleted_at"
+        ],
+        "unique": false,
+        "where": "deleted_at IS NOT NULL"
+      }
+    }
+  }
+}

@@ -1,0 +1,137 @@
+{
+  "trip": {
+    "columns": {
+      "id": {
+        "type": "text",
+        "nullable": false,
+        "primary": true
+      },
+      "member_id": {
+        "type": "text",
+        "nullable": false
+      },
+      "origin": {
+        "type": "jsonb",
+        "nullable": false
+      },
+      "destination": {
+        "type": "jsonb",
+        "nullable": false
+      },
+      "stops": {
+        "type": "jsonb",
+        "nullable": false,
+        "default": "'[]'::jsonb"
+      },
+      "route": {
+        "type": "jsonb",
+        "nullable": false
+      },
+      "depart_at": {
+        "type": "timestamptz",
+        "nullable": false
+      },
+      "flex_minutes": {
+        "type": "integer",
+        "nullable": false,
+        "default": "15"
+      },
+      "round_trip": {
+        "type": "boolean",
+        "nullable": false,
+        "default": "false"
+      },
+      "recurring_days": {
+        "type": "jsonb",
+        "nullable": false,
+        "default": "'[]'::jsonb"
+      },
+      "vehicle": {
+        "type": "text",
+        "nullable": false,
+        "enum": [
+          "car",
+          "bike",
+          "foot",
+          "transit",
+          "plane"
+        ]
+      },
+      "max_size": {
+        "type": "text",
+        "nullable": false,
+        "default": "'M'",
+        "enum": [
+          "S",
+          "M",
+          "L",
+          "XL",
+          "XXL"
+        ]
+      },
+      "max_weight_kg": {
+        "type": "double precision",
+        "nullable": false,
+        "default": "10"
+      },
+      "prefs": {
+        "type": "jsonb",
+        "nullable": false
+      },
+      "status": {
+        "type": "text",
+        "nullable": false,
+        "default": "'active'",
+        "enum": [
+          "active",
+          "done",
+          "cancelled"
+        ]
+      },
+      "created_at": {
+        "type": "timestamptz",
+        "nullable": false,
+        "default": "now()"
+      },
+      "updated_at": {
+        "type": "timestamptz",
+        "nullable": false,
+        "default": "now()"
+      },
+      "deleted_at": {
+        "type": "timestamptz",
+        "nullable": true
+      }
+    },
+    "indexes": {
+      "IDX_trip_member_id": {
+        "columns": [
+          "member_id"
+        ],
+        "unique": false,
+        "where": "deleted_at IS NULL"
+      },
+      "IDX_trip_depart_at": {
+        "columns": [
+          "depart_at"
+        ],
+        "unique": false,
+        "where": "deleted_at IS NULL"
+      },
+      "IDX_trip_status": {
+        "columns": [
+          "status"
+        ],
+        "unique": false,
+        "where": "deleted_at IS NULL"
+      },
+      "IDX_trip_deleted_at": {
+        "columns": [
+          "deleted_at"
+        ],
+        "unique": false,
+        "where": "deleted_at IS NOT NULL"
+      }
+    }
+  }
+}

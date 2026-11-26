@@ -1,0 +1,133 @@
+{
+  "ad": {
+    "columns": {
+      "id": {
+        "type": "text",
+        "nullable": false,
+        "primary": true
+      },
+      "placement": {
+        "type": "text",
+        "nullable": false,
+        "default": "'messages'",
+        "enum": [
+          "messages"
+        ]
+      },
+      "sponsor": {
+        "type": "text",
+        "nullable": false
+      },
+      "title": {
+        "type": "text",
+        "nullable": false
+      },
+      "image_file_id": {
+        "type": "text",
+        "nullable": false
+      },
+      "url": {
+        "type": "text",
+        "nullable": false
+      },
+      "starts_at": {
+        "type": "timestamptz",
+        "nullable": true
+      },
+      "ends_at": {
+        "type": "timestamptz",
+        "nullable": true
+      },
+      "active": {
+        "type": "boolean",
+        "nullable": false,
+        "default": "true"
+      },
+      "views": {
+        "type": "integer",
+        "nullable": false,
+        "default": "0"
+      },
+      "clicks": {
+        "type": "integer",
+        "nullable": false,
+        "default": "0"
+      },
+      "reports": {
+        "type": "integer",
+        "nullable": false,
+        "default": "0"
+      },
+      "created_at": {
+        "type": "timestamptz",
+        "nullable": false,
+        "default": "now()"
+      },
+      "updated_at": {
+        "type": "timestamptz",
+        "nullable": false,
+        "default": "now()"
+      },
+      "deleted_at": {
+        "type": "timestamptz",
+        "nullable": true
+      }
+    },
+    "indexes": {
+      "IDX_ad_deleted_at": {
+        "columns": [
+          "deleted_at"
+        ],
+        "unique": false,
+        "where": "deleted_at IS NOT NULL"
+      }
+    }
+  },
+  "ad_report": {
+    "columns": {
+      "id": {
+        "type": "text",
+        "nullable": false,
+        "primary": true
+      },
+      "ad_id": {
+        "type": "text",
+        "nullable": false
+      },
+      "member_id": {
+        "type": "text",
+        "nullable": true
+      },
+      "created_at": {
+        "type": "timestamptz",
+        "nullable": false,
+        "default": "now()"
+      },
+      "updated_at": {
+        "type": "timestamptz",
+        "nullable": false,
+        "default": "now()"
+      },
+      "deleted_at": {
+        "type": "timestamptz",
+        "nullable": true
+      }
+    },
+    "indexes": {
+      "IDX_ad_report_ad_id": {
+        "columns": [
+          "ad_id"
+        ],
+        "unique": false,
+        "where": "deleted_at IS NULL"
+      },
+      "IDX_ad_report_deleted_at": {
+        "columns": [
+          "deleted_at"
+        ],
+        "unique": false,
+        "where": "deleted_at IS NOT NULL"
+      }
+    }
+  }
+}

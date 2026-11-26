@@ -1,0 +1,60 @@
+# The database for local development, as with Medusa: `docker compose up -d` here (Traiku/web),
+# then `npm run db:migrate` in backend/. Its variables come from backend/.env (env_file).
+# PostGIS is included for the searches by distance and along a trip's route.
+#
+# Three roles, so a flaw in the app can't do everything:
+# - postgres: superuser, only for the container itself;
+# - traiku_owner: owns the tables, used by db:migrate only (DATABASE_MIGRATION_URL);
+# - traiku_app: what the server runs with (DATABASE_URL): read and write rows, nothing else.
+# The port only listens on this machine, never on the network.
+name: traiku
+
+services:
+  postgres:
+    image: postgis/postgis:16-3.4
+    container_name: traiku-postgres
+    restart: unless-stopped
+    # POSTGRES_PASSWORD, TRAIKU_OWNER_PASSWORD and TRAIKU_APP_PASSWORD come from backend/.env.
+    env_file: ./backend/.env
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_DB: traiku
+    ports:
+      - "127.0.0.1:${POSTGRES_PORT:-5432}:5432"
+    volumes:
+      - traiku-postgres:/var/lib/postgresql/data
+      - ./backend/docker/20-roles.sh:/docker-entrypoint-initdb.d/20-roles.sh:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d traiku"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  # Backups: a dump of the database every BACKUP_EVERY_HOURS hours into backend/backups, kept
+  # BACKUP_KEEP_DAYS days. `npm run db:backup` for one now, `npm run db:restore` to restore one.
+  # Copy them off this machine too (another disk, encrypted storage): a backup on the same disk
+  # doesn't survive the disk.
+  backup:
+    image: postgis/postgis:16-3.4
+    container_name: traiku-backup
+    restart: unless-stopped
+    # Your user, so the files in backend/backups are yours to copy elsewhere (readable by you only).
+    user: "${BACKUP_UID:-1000}:${BACKUP_GID:-1000}"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    # POSTGRES_PASSWORD, BACKUP_EVERY_HOURS and BACKUP_KEEP_DAYS come from backend/.env.
+    env_file: ./backend/.env
+    environment:
+      PGHOST: postgres
+      PGUSER: postgres
+      PGDATABASE: traiku
+    volumes:
+      - ./backend/backups:/backups
+      - ./backend/docker/backup.sh:/backup.sh:ro
+    entrypoint: ["bash", "/backup.sh"]
+
+volumes:
+  traiku-postgres:
+    # The name it had when this file was in backend/: keeps the existing data.
+    name: backend_traiku-postgres

@@ -1,0 +1,466 @@
+{
+  "member": {
+    "columns": {
+      "id": {
+        "type": "text",
+        "nullable": false,
+        "primary": true
+      },
+      "phone": {
+        "type": "text",
+        "nullable": false
+      },
+      "country": {
+        "type": "text",
+        "nullable": true
+      },
+      "email": {
+        "type": "text",
+        "nullable": true
+      },
+      "first_name": {
+        "type": "text",
+        "nullable": false
+      },
+      "last_name": {
+        "type": "text",
+        "nullable": true
+      },
+      "civility": {
+        "type": "text",
+        "nullable": true,
+        "enum": [
+          "mme",
+          "m"
+        ]
+      },
+      "birth_date": {
+        "type": "text",
+        "nullable": true
+      },
+      "avatar_color": {
+        "type": "text",
+        "nullable": false,
+        "default": "'#7C3AED'"
+      },
+      "bio": {
+        "type": "text",
+        "nullable": true
+      },
+      "vehicle": {
+        "type": "text",
+        "nullable": true,
+        "enum": [
+          "car",
+          "bike",
+          "foot",
+          "transit",
+          "plane"
+        ]
+      },
+      "professions": {
+        "type": "text[]",
+        "nullable": false,
+        "default": "'{}'::text[]"
+      },
+      "professions_answered_at": {
+        "type": "timestamptz",
+        "nullable": true
+      },
+      "address": {
+        "type": "jsonb",
+        "nullable": true
+      },
+      "saved_places": {
+        "type": "jsonb",
+        "nullable": false,
+        "default": "'[]'::jsonb"
+      },
+      "deletion_requested_at": {
+        "type": "timestamptz",
+        "nullable": true
+      },
+      "tax_info": {
+        "type": "jsonb",
+        "nullable": true
+      },
+      "zone": {
+        "type": "jsonb",
+        "nullable": true
+      },
+      "price_prefs": {
+        "type": "jsonb",
+        "nullable": true
+      },
+      "verified_phone": {
+        "type": "boolean",
+        "nullable": false,
+        "default": "false"
+      },
+      "verified_id": {
+        "type": "boolean",
+        "nullable": false,
+        "default": "false"
+      },
+      "verifier": {
+        "type": "jsonb",
+        "nullable": true
+      },
+      "rating_avg": {
+        "type": "double precision",
+        "nullable": false,
+        "default": "0"
+      },
+      "rating_count": {
+        "type": "integer",
+        "nullable": false,
+        "default": "0"
+      },
+      "missions_done": {
+        "type": "integer",
+        "nullable": false,
+        "default": "0"
+      },
+      "withdrawals": {
+        "type": "jsonb",
+        "nullable": false,
+        "default": "'[]'::jsonb"
+      },
+      "status": {
+        "type": "text",
+        "nullable": false,
+        "default": "'active'",
+        "enum": [
+          "active",
+          "suspended"
+        ]
+      },
+      "suspended_until": {
+        "type": "timestamptz",
+        "nullable": true
+      },
+      "metadata": {
+        "type": "jsonb",
+        "nullable": true
+      },
+      "created_at": {
+        "type": "timestamptz",
+        "nullable": false,
+        "default": "now()"
+      },
+      "updated_at": {
+        "type": "timestamptz",
+        "nullable": false,
+        "default": "now()"
+      },
+      "deleted_at": {
+        "type": "timestamptz",
+        "nullable": true
+      }
+    },
+    "indexes": {
+      "IDX_member_phone_unique": {
+        "columns": [
+          "phone"
+        ],
+        "unique": true,
+        "where": "deleted_at IS NULL"
+      },
+      "IDX_member_deleted_at": {
+        "columns": [
+          "deleted_at"
+        ],
+        "unique": false,
+        "where": "deleted_at IS NOT NULL"
+      }
+    }
+  },
+  "identity_check": {
+    "columns": {
+      "id": {
+        "type": "text",
+        "nullable": false,
+        "primary": true
+      },
+      "member_id": {
+        "type": "text",
+        "nullable": false
+      },
+      "document_type": {
+        "type": "text",
+        "nullable": false
+      },
+      "front_file_id": {
+        "type": "text",
+        "nullable": false
+      },
+      "back_file_id": {
+        "type": "text",
+        "nullable": true
+      },
+      "selfie_file_id": {
+        "type": "text",
+        "nullable": false
+      },
+      "pose_file_ids": {
+        "type": "jsonb",
+        "nullable": false,
+        "default": "'{}'::jsonb"
+      },
+      "status": {
+        "type": "text",
+        "nullable": false,
+        "default": "'pending'",
+        "enum": [
+          "pending",
+          "verified",
+          "refused",
+          "replaced"
+        ]
+      },
+      "reason": {
+        "type": "text",
+        "nullable": true
+      },
+      "provider": {
+        "type": "text",
+        "nullable": false,
+        "default": "'manual'"
+      },
+      "provider_ref": {
+        "type": "text",
+        "nullable": true
+      },
+      "reviewed_by": {
+        "type": "text",
+        "nullable": true
+      },
+      "reviewed_at": {
+        "type": "timestamptz",
+        "nullable": true
+      },
+      "consent_at": {
+        "type": "timestamptz",
+        "nullable": false
+      },
+      "created_at": {
+        "type": "timestamptz",
+        "nullable": false,
+        "default": "now()"
+      },
+      "updated_at": {
+        "type": "timestamptz",
+        "nullable": false,
+        "default": "now()"
+      },
+      "deleted_at": {
+        "type": "timestamptz",
+        "nullable": true
+      }
+    },
+    "indexes": {
+      "IDX_identity_check_member_id": {
+        "columns": [
+          "member_id"
+        ],
+        "unique": false,
+        "where": "deleted_at IS NULL"
+      },
+      "IDX_identity_check_status": {
+        "columns": [
+          "status"
+        ],
+        "unique": false,
+        "where": "deleted_at IS NULL"
+      },
+      "IDX_identity_check_deleted_at": {
+        "columns": [
+          "deleted_at"
+        ],
+        "unique": false,
+        "where": "deleted_at IS NOT NULL"
+      }
+    }
+  },
+  "credential": {
+    "columns": {
+      "id": {
+        "type": "text",
+        "nullable": false,
+        "primary": true
+      },
+      "member_id": {
+        "type": "text",
+        "nullable": false
+      },
+      "kind": {
+        "type": "text",
+        "nullable": false,
+        "default": "'trade'",
+        "enum": [
+          "trade",
+          "licence"
+        ]
+      },
+      "profession": {
+        "type": "text",
+        "nullable": false
+      },
+      "title": {
+        "type": "text",
+        "nullable": true
+      },
+      "file_ids": {
+        "type": "jsonb",
+        "nullable": false
+      },
+      "status": {
+        "type": "text",
+        "nullable": false,
+        "default": "'pending'",
+        "enum": [
+          "pending",
+          "approved",
+          "refused"
+        ]
+      },
+      "reason": {
+        "type": "text",
+        "nullable": true
+      },
+      "reviewed_by": {
+        "type": "text",
+        "nullable": true
+      },
+      "reviewed_at": {
+        "type": "timestamptz",
+        "nullable": true
+      },
+      "created_at": {
+        "type": "timestamptz",
+        "nullable": false,
+        "default": "now()"
+      },
+      "updated_at": {
+        "type": "timestamptz",
+        "nullable": false,
+        "default": "now()"
+      },
+      "deleted_at": {
+        "type": "timestamptz",
+        "nullable": true
+      }
+    },
+    "indexes": {
+      "IDX_credential_member_id": {
+        "columns": [
+          "member_id"
+        ],
+        "unique": false,
+        "where": "deleted_at IS NULL"
+      },
+      "IDX_credential_status": {
+        "columns": [
+          "status"
+        ],
+        "unique": false,
+        "where": "deleted_at IS NULL"
+      },
+      "IDX_credential_deleted_at": {
+        "columns": [
+          "deleted_at"
+        ],
+        "unique": false,
+        "where": "deleted_at IS NOT NULL"
+      }
+    }
+  },
+  "support_request": {
+    "columns": {
+      "id": {
+        "type": "text",
+        "nullable": false,
+        "primary": true
+      },
+      "member_id": {
+        "type": "text",
+        "nullable": false
+      },
+      "topic": {
+        "type": "text",
+        "nullable": false,
+        "default": "'other'",
+        "enum": [
+          "mission",
+          "payment",
+          "account",
+          "safety",
+          "other"
+        ]
+      },
+      "message": {
+        "type": "text",
+        "nullable": false
+      },
+      "status": {
+        "type": "text",
+        "nullable": false,
+        "default": "'open'",
+        "enum": [
+          "open",
+          "answered",
+          "closed"
+        ]
+      },
+      "answer": {
+        "type": "text",
+        "nullable": true
+      },
+      "answered_by": {
+        "type": "text",
+        "nullable": true
+      },
+      "answered_at": {
+        "type": "timestamptz",
+        "nullable": true
+      },
+      "created_at": {
+        "type": "timestamptz",
+        "nullable": false,
+        "default": "now()"
+      },
+      "updated_at": {
+        "type": "timestamptz",
+        "nullable": false,
+        "default": "now()"
+      },
+      "deleted_at": {
+        "type": "timestamptz",
+        "nullable": true
+      }
+    },
+    "indexes": {
+      "IDX_support_request_member_id": {
+        "columns": [
+          "member_id"
+        ],
+        "unique": false,
+        "where": "deleted_at IS NULL"
+      },
+      "IDX_support_request_status": {
+        "columns": [
+          "status"
+        ],
+        "unique": false,
+        "where": "deleted_at IS NULL"
+      },
+      "IDX_support_request_deleted_at": {
+        "columns": [
+          "deleted_at"
+        ],
+        "unique": false,
+        "where": "deleted_at IS NOT NULL"
+      }
+    }
+  }
+}

@@ -1,0 +1,307 @@
+{
+  "payout_account": {
+    "columns": {
+      "id": {
+        "type": "text",
+        "nullable": false,
+        "primary": true
+      },
+      "member_id": {
+        "type": "text",
+        "nullable": false
+      },
+      "provider_id": {
+        "type": "text",
+        "nullable": false
+      },
+      "external_id": {
+        "type": "text",
+        "nullable": true
+      },
+      "status": {
+        "type": "text",
+        "nullable": false,
+        "default": "'pending'",
+        "enum": [
+          "pending",
+          "active",
+          "restricted"
+        ]
+      },
+      "bank_last4": {
+        "type": "text",
+        "nullable": true
+      },
+      "holder": {
+        "type": "text",
+        "nullable": true
+      },
+      "hold": {
+        "type": "boolean",
+        "nullable": false,
+        "default": "false"
+      },
+      "hold_reason": {
+        "type": "text",
+        "nullable": true
+      },
+      "data": {
+        "type": "jsonb",
+        "nullable": false,
+        "default": "'{}'::jsonb"
+      },
+      "created_at": {
+        "type": "timestamptz",
+        "nullable": false,
+        "default": "now()"
+      },
+      "updated_at": {
+        "type": "timestamptz",
+        "nullable": false,
+        "default": "now()"
+      },
+      "deleted_at": {
+        "type": "timestamptz",
+        "nullable": true
+      }
+    },
+    "indexes": {
+      "IDX_payout_account_member_id_unique": {
+        "columns": [
+          "member_id"
+        ],
+        "unique": true,
+        "where": "deleted_at IS NULL"
+      },
+      "IDX_payout_account_status": {
+        "columns": [
+          "status"
+        ],
+        "unique": false,
+        "where": "deleted_at IS NULL"
+      },
+      "IDX_payout_account_deleted_at": {
+        "columns": [
+          "deleted_at"
+        ],
+        "unique": false,
+        "where": "deleted_at IS NOT NULL"
+      }
+    }
+  },
+  "earning": {
+    "columns": {
+      "id": {
+        "type": "text",
+        "nullable": false,
+        "primary": true
+      },
+      "member_id": {
+        "type": "text",
+        "nullable": false
+      },
+      "mission_id": {
+        "type": "text",
+        "nullable": false
+      },
+      "run_id": {
+        "type": "text",
+        "nullable": true
+      },
+      "kind": {
+        "type": "text",
+        "nullable": false,
+        "enum": [
+          "mission",
+          "verify_only",
+          "cancellation",
+          "no_show"
+        ]
+      },
+      "amount": {
+        "type": "numeric",
+        "nullable": false
+      },
+      "currency_code": {
+        "type": "text",
+        "nullable": false
+      },
+      "status": {
+        "type": "text",
+        "nullable": false,
+        "default": "'pending'",
+        "enum": [
+          "pending",
+          "available",
+          "paid",
+          "canceled"
+        ]
+      },
+      "available_at": {
+        "type": "timestamptz",
+        "nullable": false
+      },
+      "payout_id": {
+        "type": "text",
+        "nullable": true
+      },
+      "created_at": {
+        "type": "timestamptz",
+        "nullable": false,
+        "default": "now()"
+      },
+      "updated_at": {
+        "type": "timestamptz",
+        "nullable": false,
+        "default": "now()"
+      },
+      "deleted_at": {
+        "type": "timestamptz",
+        "nullable": true
+      }
+    },
+    "indexes": {
+      "IDX_earning_member_id": {
+        "columns": [
+          "member_id"
+        ],
+        "unique": false,
+        "where": "deleted_at IS NULL"
+      },
+      "IDX_earning_mission_id": {
+        "columns": [
+          "mission_id"
+        ],
+        "unique": false,
+        "where": "deleted_at IS NULL"
+      },
+      "IDX_earning_status": {
+        "columns": [
+          "status"
+        ],
+        "unique": false,
+        "where": "deleted_at IS NULL"
+      },
+      "IDX_earning_payout_id": {
+        "columns": [
+          "payout_id"
+        ],
+        "unique": false,
+        "where": "deleted_at IS NULL"
+      },
+      "IDX_earning_deleted_at": {
+        "columns": [
+          "deleted_at"
+        ],
+        "unique": false,
+        "where": "deleted_at IS NOT NULL"
+      },
+      "IDX_earning_mission_id_member_id_kind_unique": {
+        "columns": [
+          "mission_id",
+          "member_id",
+          "kind"
+        ],
+        "unique": true,
+        "where": "deleted_at IS NULL"
+      }
+    }
+  },
+  "payout": {
+    "columns": {
+      "id": {
+        "type": "text",
+        "nullable": false,
+        "primary": true
+      },
+      "member_id": {
+        "type": "text",
+        "nullable": false
+      },
+      "account_id": {
+        "type": "text",
+        "nullable": false
+      },
+      "provider_id": {
+        "type": "text",
+        "nullable": false
+      },
+      "amount": {
+        "type": "numeric",
+        "nullable": false
+      },
+      "currency_code": {
+        "type": "text",
+        "nullable": false
+      },
+      "status": {
+        "type": "text",
+        "nullable": false,
+        "default": "'pending'",
+        "enum": [
+          "pending",
+          "paid",
+          "failed",
+          "canceled"
+        ]
+      },
+      "external_id": {
+        "type": "text",
+        "nullable": true
+      },
+      "error": {
+        "type": "text",
+        "nullable": true
+      },
+      "created_by": {
+        "type": "text",
+        "nullable": true
+      },
+      "paid_at": {
+        "type": "timestamptz",
+        "nullable": true
+      },
+      "failed_at": {
+        "type": "timestamptz",
+        "nullable": true
+      },
+      "created_at": {
+        "type": "timestamptz",
+        "nullable": false,
+        "default": "now()"
+      },
+      "updated_at": {
+        "type": "timestamptz",
+        "nullable": false,
+        "default": "now()"
+      },
+      "deleted_at": {
+        "type": "timestamptz",
+        "nullable": true
+      }
+    },
+    "indexes": {
+      "IDX_payout_member_id": {
+        "columns": [
+          "member_id"
+        ],
+        "unique": false,
+        "where": "deleted_at IS NULL"
+      },
+      "IDX_payout_status": {
+        "columns": [
+          "status"
+        ],
+        "unique": false,
+        "where": "deleted_at IS NULL"
+      },
+      "IDX_payout_deleted_at": {
+        "columns": [
+          "deleted_at"
+        ],
+        "unique": false,
+        "where": "deleted_at IS NOT NULL"
+      }
+    }
+  }
+}

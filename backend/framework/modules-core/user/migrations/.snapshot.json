@@ -1,0 +1,120 @@
+{
+  "user": {
+    "columns": {
+      "id": {
+        "type": "text",
+        "nullable": false,
+        "primary": true
+      },
+      "email": {
+        "type": "text",
+        "nullable": false
+      },
+      "first_name": {
+        "type": "text",
+        "nullable": true
+      },
+      "last_name": {
+        "type": "text",
+        "nullable": true
+      },
+      "metadata": {
+        "type": "jsonb",
+        "nullable": true
+      },
+      "created_at": {
+        "type": "timestamptz",
+        "nullable": false,
+        "default": "now()"
+      },
+      "updated_at": {
+        "type": "timestamptz",
+        "nullable": false,
+        "default": "now()"
+      },
+      "deleted_at": {
+        "type": "timestamptz",
+        "nullable": true
+      }
+    },
+    "indexes": {
+      "IDX_user_email_unique": {
+        "columns": [
+          "email"
+        ],
+        "unique": true,
+        "where": "deleted_at IS NULL"
+      },
+      "IDX_user_deleted_at": {
+        "columns": [
+          "deleted_at"
+        ],
+        "unique": false,
+        "where": "deleted_at IS NOT NULL"
+      }
+    }
+  },
+  "user_action": {
+    "columns": {
+      "id": {
+        "type": "text",
+        "nullable": false,
+        "primary": true
+      },
+      "actor_id": {
+        "type": "text",
+        "nullable": false
+      },
+      "actor_type": {
+        "type": "text",
+        "nullable": false
+      },
+      "method": {
+        "type": "text",
+        "nullable": false
+      },
+      "path": {
+        "type": "text",
+        "nullable": false
+      },
+      "status": {
+        "type": "integer",
+        "nullable": false
+      },
+      "ip": {
+        "type": "text",
+        "nullable": true
+      },
+      "created_at": {
+        "type": "timestamptz",
+        "nullable": false,
+        "default": "now()"
+      },
+      "updated_at": {
+        "type": "timestamptz",
+        "nullable": false,
+        "default": "now()"
+      },
+      "deleted_at": {
+        "type": "timestamptz",
+        "nullable": true
+      }
+    },
+    "indexes": {
+      "IDX_user_action_actor_id": {
+        "columns": [
+          "actor_id"
+        ],
+        "unique": false,
+        "where": "deleted_at IS NULL"
+      },
+      "IDX_user_action_deleted_at": {
+        "columns": [
+          "deleted_at"
+        ],
+        "unique": false,
+        "where": "deleted_at IS NOT NULL"
+      }
+    }
+  }
+}

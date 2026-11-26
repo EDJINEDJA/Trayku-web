@@ -1,0 +1,55 @@
+{
+  "currency": {
+    "columns": {
+      "code": {
+        "type": "text",
+        "nullable": false,
+        "primary": true
+      },
+      "name": {
+        "type": "text",
+        "nullable": false
+      },
+      "symbol": {
+        "type": "text",
+        "nullable": false
+      },
+      "symbol_native": {
+        "type": "text",
+        "nullable": false
+      },
+      "decimal_digits": {
+        "type": "integer",
+        "nullable": false
+      },
+      "rounding": {
+        "type": "double precision",
+        "nullable": false,
+        "default": "0"
+      },
+      "created_at": {
+        "type": "timestamptz",
+        "nullable": false,
+        "default": "now()"
+      },
+      "updated_at": {
+        "type": "timestamptz",
+        "nullable": false,
+        "default": "now()"
+      },
+      "deleted_at": {
+        "type": "timestamptz",
+        "nullable": true
+      }
+    },
+    "indexes": {
+      "IDX_currency_deleted_at": {
+        "columns": [
+          "deleted_at"
+        ],
+        "unique": false,
+        "where": "deleted_at IS NOT NULL"
+      }
+    }
+  }
+}

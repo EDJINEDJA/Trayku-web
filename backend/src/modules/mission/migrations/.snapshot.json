@@ -1,0 +1,867 @@
+{
+  "mission": {
+    "columns": {
+      "id": {
+        "type": "text",
+        "nullable": false,
+        "primary": true
+      },
+      "requester_id": {
+        "type": "text",
+        "nullable": false
+      },
+      "mode": {
+        "type": "text",
+        "nullable": false,
+        "default": "'transport'",
+        "enum": [
+          "transport",
+          "onsite",
+          "pro"
+        ]
+      },
+      "type": {
+        "type": "text",
+        "nullable": false,
+        "enum": [
+          "parcel",
+          "pickup",
+          "errand",
+          "handover",
+          "bulky",
+          "check",
+          "task",
+          "pro"
+        ]
+      },
+      "category": {
+        "type": "text",
+        "nullable": false,
+        "enum": [
+          "clickcollect",
+          "check",
+          "checkpickup",
+          "transfer",
+          "assistance"
+        ]
+      },
+      "catalog_id": {
+        "type": "text",
+        "nullable": true
+      },
+      "title": {
+        "type": "text",
+        "nullable": false
+      },
+      "description": {
+        "type": "text",
+        "nullable": false,
+        "default": "''"
+      },
+      "size": {
+        "type": "text",
+        "nullable": false,
+        "default": "'S'",
+        "enum": [
+          "S",
+          "M",
+          "L",
+          "XL",
+          "XXL"
+        ]
+      },
+      "weight_kg": {
+        "type": "double precision",
+        "nullable": false,
+        "default": "0"
+      },
+      "declared_value": {
+        "type": "numeric",
+        "nullable": false,
+        "default": "0"
+      },
+      "fragile": {
+        "type": "boolean",
+        "nullable": false,
+        "default": "false"
+      },
+      "frozen": {
+        "type": "boolean",
+        "nullable": false,
+        "default": "false"
+      },
+      "photos": {
+        "type": "jsonb",
+        "nullable": false,
+        "default": "'[]'::jsonb"
+      },
+      "pickup": {
+        "type": "jsonb",
+        "nullable": false
+      },
+      "dropoff": {
+        "type": "jsonb",
+        "nullable": false
+      },
+      "pickup_note": {
+        "type": "text",
+        "nullable": true
+      },
+      "dropoff_note": {
+        "type": "text",
+        "nullable": true
+      },
+      "deadline": {
+        "type": "timestamptz",
+        "nullable": false
+      },
+      "window_start": {
+        "type": "timestamptz",
+        "nullable": true
+      },
+      "onsite_minutes": {
+        "type": "integer",
+        "nullable": true
+      },
+      "proof": {
+        "type": "text",
+        "nullable": true,
+        "enum": [
+          "photo",
+          "code"
+        ]
+      },
+      "profession": {
+        "type": "text",
+        "nullable": true,
+        "enum": [
+          "mechanic",
+          "bike",
+          "it"
+        ]
+      },
+      "recipient_name": {
+        "type": "text",
+        "nullable": true
+      },
+      "recipient_phone": {
+        "type": "text",
+        "nullable": true
+      },
+      "dropoff_floor": {
+        "type": "integer",
+        "nullable": true
+      },
+      "dropoff_elevator": {
+        "type": "boolean",
+        "nullable": true
+      },
+      "pickup_floor": {
+        "type": "integer",
+        "nullable": true
+      },
+      "pickup_elevator": {
+        "type": "boolean",
+        "nullable": true
+      },
+      "sender_name": {
+        "type": "text",
+        "nullable": true
+      },
+      "sender_email": {
+        "type": "text",
+        "nullable": true
+      },
+      "recipient_email": {
+        "type": "text",
+        "nullable": true
+      },
+      "handler_phone": {
+        "type": "text",
+        "nullable": true
+      },
+      "chat_open": {
+        "type": "boolean",
+        "nullable": false,
+        "default": "false"
+      },
+      "order": {
+        "type": "jsonb",
+        "nullable": true
+      },
+      "handoff": {
+        "type": "jsonb",
+        "nullable": true
+      },
+      "parcel": {
+        "type": "jsonb",
+        "nullable": true
+      },
+      "deposit": {
+        "type": "jsonb",
+        "nullable": true
+      },
+      "purchase": {
+        "type": "jsonb",
+        "nullable": true
+      },
+      "seller": {
+        "type": "jsonb",
+        "nullable": true
+      },
+      "listing": {
+        "type": "jsonb",
+        "nullable": true
+      },
+      "subject": {
+        "type": "text",
+        "nullable": true
+      },
+      "inspect_kind": {
+        "type": "text",
+        "nullable": true
+      },
+      "checklist": {
+        "type": "jsonb",
+        "nullable": true
+      },
+      "min_photos": {
+        "type": "integer",
+        "nullable": true
+      },
+      "live_call": {
+        "type": "boolean",
+        "nullable": false,
+        "default": "false"
+      },
+      "obd_diagnostic": {
+        "type": "boolean",
+        "nullable": false,
+        "default": "false"
+      },
+      "appointment": {
+        "type": "timestamptz",
+        "nullable": true
+      },
+      "appointment_end": {
+        "type": "timestamptz",
+        "nullable": true
+      },
+      "seller_windows": {
+        "type": "jsonb",
+        "nullable": true
+      },
+      "chosen_proposal_id": {
+        "type": "text",
+        "nullable": true
+      },
+      "seller_confirmed": {
+        "type": "boolean",
+        "nullable": false,
+        "default": "false"
+      },
+      "seller_code": {
+        "type": "text",
+        "nullable": true
+      },
+      "verify_only_price": {
+        "type": "numeric",
+        "nullable": true
+      },
+      "from_mission_id": {
+        "type": "text",
+        "nullable": true
+      },
+      "follow_up_id": {
+        "type": "text",
+        "nullable": true
+      },
+      "urgent": {
+        "type": "boolean",
+        "nullable": false,
+        "default": "false"
+      },
+      "region_id": {
+        "type": "text",
+        "nullable": true
+      },
+      "currency_code": {
+        "type": "text",
+        "nullable": false,
+        "default": "'EUR'"
+      },
+      "price": {
+        "type": "numeric",
+        "nullable": false
+      },
+      "crew": {
+        "type": "integer",
+        "nullable": false,
+        "default": "1"
+      },
+      "seats_taken": {
+        "type": "integer",
+        "nullable": false,
+        "default": "0"
+      },
+      "traikeur_rate": {
+        "type": "double precision",
+        "nullable": false,
+        "default": "0"
+      },
+      "service_fee": {
+        "type": "numeric",
+        "nullable": false,
+        "default": "0"
+      },
+      "insurance_fee": {
+        "type": "numeric",
+        "nullable": false,
+        "default": "0"
+      },
+      "cancel_fee": {
+        "type": "numeric",
+        "nullable": true
+      },
+      "status": {
+        "type": "text",
+        "nullable": false,
+        "default": "'open'",
+        "enum": [
+          "awaiting_payment",
+          "review",
+          "open",
+          "accepted",
+          "picked_up",
+          "delivered",
+          "cancelled"
+        ]
+      },
+      "review_note": {
+        "type": "text",
+        "nullable": true
+      },
+      "republished_at": {
+        "type": "timestamptz",
+        "nullable": true
+      },
+      "cancelled_at": {
+        "type": "timestamptz",
+        "nullable": true
+      },
+      "metadata": {
+        "type": "jsonb",
+        "nullable": true
+      },
+      "created_at": {
+        "type": "timestamptz",
+        "nullable": false,
+        "default": "now()"
+      },
+      "updated_at": {
+        "type": "timestamptz",
+        "nullable": false,
+        "default": "now()"
+      },
+      "deleted_at": {
+        "type": "timestamptz",
+        "nullable": true
+      }
+    },
+    "indexes": {
+      "IDX_mission_requester_id": {
+        "columns": [
+          "requester_id"
+        ],
+        "unique": false,
+        "where": "deleted_at IS NULL"
+      },
+      "IDX_mission_category": {
+        "columns": [
+          "category"
+        ],
+        "unique": false,
+        "where": "deleted_at IS NULL"
+      },
+      "IDX_mission_status": {
+        "columns": [
+          "status"
+        ],
+        "unique": false,
+        "where": "deleted_at IS NULL"
+      },
+      "IDX_mission_deleted_at": {
+        "columns": [
+          "deleted_at"
+        ],
+        "unique": false,
+        "where": "deleted_at IS NOT NULL"
+      }
+    }
+  },
+  "run": {
+    "columns": {
+      "id": {
+        "type": "text",
+        "nullable": false,
+        "primary": true
+      },
+      "mission_id": {
+        "type": "text",
+        "nullable": false,
+        "references": {
+          "table": "mission",
+          "column": "id",
+          "onDelete": "cascade"
+        }
+      },
+      "traveler_id": {
+        "type": "text",
+        "nullable": false
+      },
+      "trip_id": {
+        "type": "text",
+        "nullable": true
+      },
+      "step": {
+        "type": "text",
+        "nullable": false,
+        "default": "'confirmed'",
+        "enum": [
+          "confirmed",
+          "to_pickup",
+          "inspected",
+          "picked_up",
+          "to_dropoff",
+          "delivered",
+          "rated"
+        ]
+      },
+      "status": {
+        "type": "text",
+        "nullable": false,
+        "default": "'active'",
+        "enum": [
+          "active",
+          "done",
+          "cancelled"
+        ]
+      },
+      "pickup_code": {
+        "type": "text",
+        "nullable": false
+      },
+      "dropoff_code": {
+        "type": "text",
+        "nullable": false
+      },
+      "code_attempts": {
+        "type": "integer",
+        "nullable": false,
+        "default": "0"
+      },
+      "locked_at": {
+        "type": "timestamptz",
+        "nullable": true
+      },
+      "accepted_at": {
+        "type": "timestamptz",
+        "nullable": false
+      },
+      "pickup_unlocked_at": {
+        "type": "timestamptz",
+        "nullable": true
+      },
+      "pickup_code_at": {
+        "type": "timestamptz",
+        "nullable": true
+      },
+      "seller_checked_at": {
+        "type": "timestamptz",
+        "nullable": true
+      },
+      "picked_at": {
+        "type": "timestamptz",
+        "nullable": true
+      },
+      "delivered_at": {
+        "type": "timestamptz",
+        "nullable": true
+      },
+      "cancelled_at": {
+        "type": "timestamptz",
+        "nullable": true
+      },
+      "cancelled_by": {
+        "type": "text",
+        "nullable": true
+      },
+      "pickup_photo": {
+        "type": "jsonb",
+        "nullable": true
+      },
+      "dropoff_photo": {
+        "type": "jsonb",
+        "nullable": true
+      },
+      "faces": {
+        "type": "jsonb",
+        "nullable": false,
+        "default": "'[]'::jsonb"
+      },
+      "before_photos": {
+        "type": "jsonb",
+        "nullable": false,
+        "default": "'[]'::jsonb"
+      },
+      "work_photos": {
+        "type": "jsonb",
+        "nullable": false,
+        "default": "'[]'::jsonb"
+      },
+      "inspection": {
+        "type": "jsonb",
+        "nullable": true
+      },
+      "report": {
+        "type": "jsonb",
+        "nullable": true
+      },
+      "report_sent_at": {
+        "type": "timestamptz",
+        "nullable": true
+      },
+      "decision": {
+        "type": "text",
+        "nullable": true,
+        "enum": [
+          "accepted",
+          "refused",
+          "expired"
+        ]
+      },
+      "decided_at": {
+        "type": "timestamptz",
+        "nullable": true
+      },
+      "leg_started_at": {
+        "type": "timestamptz",
+        "nullable": true
+      },
+      "leg_from": {
+        "type": "jsonb",
+        "nullable": true
+      },
+      "tip": {
+        "type": "numeric",
+        "nullable": false,
+        "default": "0"
+      },
+      "extra_minutes": {
+        "type": "integer",
+        "nullable": false,
+        "default": "0"
+      },
+      "extra_amount": {
+        "type": "numeric",
+        "nullable": false,
+        "default": "0"
+      },
+      "extra_request": {
+        "type": "jsonb",
+        "nullable": true
+      },
+      "created_at": {
+        "type": "timestamptz",
+        "nullable": false,
+        "default": "now()"
+      },
+      "updated_at": {
+        "type": "timestamptz",
+        "nullable": false,
+        "default": "now()"
+      },
+      "deleted_at": {
+        "type": "timestamptz",
+        "nullable": true
+      }
+    },
+    "indexes": {
+      "IDX_run_mission_id": {
+        "columns": [
+          "mission_id"
+        ],
+        "unique": false,
+        "where": "deleted_at IS NULL"
+      },
+      "IDX_run_traveler_id": {
+        "columns": [
+          "traveler_id"
+        ],
+        "unique": false,
+        "where": "deleted_at IS NULL"
+      },
+      "IDX_run_status": {
+        "columns": [
+          "status"
+        ],
+        "unique": false,
+        "where": "deleted_at IS NULL"
+      },
+      "IDX_run_deleted_at": {
+        "columns": [
+          "deleted_at"
+        ],
+        "unique": false,
+        "where": "deleted_at IS NOT NULL"
+      }
+    }
+  },
+  "run_event": {
+    "columns": {
+      "id": {
+        "type": "text",
+        "nullable": false,
+        "primary": true
+      },
+      "run_id": {
+        "type": "text",
+        "nullable": false,
+        "references": {
+          "table": "run",
+          "column": "id",
+          "onDelete": "cascade"
+        }
+      },
+      "type": {
+        "type": "text",
+        "nullable": false
+      },
+      "actor_id": {
+        "type": "text",
+        "nullable": true
+      },
+      "coords": {
+        "type": "jsonb",
+        "nullable": true
+      },
+      "payload": {
+        "type": "jsonb",
+        "nullable": true
+      },
+      "created_at": {
+        "type": "timestamptz",
+        "nullable": false,
+        "default": "now()"
+      },
+      "updated_at": {
+        "type": "timestamptz",
+        "nullable": false,
+        "default": "now()"
+      },
+      "deleted_at": {
+        "type": "timestamptz",
+        "nullable": true
+      }
+    },
+    "indexes": {
+      "IDX_run_event_run_id": {
+        "columns": [
+          "run_id"
+        ],
+        "unique": false,
+        "where": "deleted_at IS NULL"
+      },
+      "IDX_run_event_deleted_at": {
+        "columns": [
+          "deleted_at"
+        ],
+        "unique": false,
+        "where": "deleted_at IS NOT NULL"
+      }
+    }
+  },
+  "proposal": {
+    "columns": {
+      "id": {
+        "type": "text",
+        "nullable": false,
+        "primary": true
+      },
+      "mission_id": {
+        "type": "text",
+        "nullable": false,
+        "references": {
+          "table": "mission",
+          "column": "id",
+          "onDelete": "cascade"
+        }
+      },
+      "member_id": {
+        "type": "text",
+        "nullable": false
+      },
+      "at": {
+        "type": "timestamptz",
+        "nullable": false
+      },
+      "status": {
+        "type": "text",
+        "nullable": false,
+        "default": "'pending'",
+        "enum": [
+          "pending",
+          "sent",
+          "accepted",
+          "declined"
+        ]
+      },
+      "created_at": {
+        "type": "timestamptz",
+        "nullable": false,
+        "default": "now()"
+      },
+      "updated_at": {
+        "type": "timestamptz",
+        "nullable": false,
+        "default": "now()"
+      },
+      "deleted_at": {
+        "type": "timestamptz",
+        "nullable": true
+      }
+    },
+    "indexes": {
+      "IDX_proposal_mission_id": {
+        "columns": [
+          "mission_id"
+        ],
+        "unique": false,
+        "where": "deleted_at IS NULL"
+      },
+      "IDX_proposal_member_id": {
+        "columns": [
+          "member_id"
+        ],
+        "unique": false,
+        "where": "deleted_at IS NULL"
+      },
+      "IDX_proposal_deleted_at": {
+        "columns": [
+          "deleted_at"
+        ],
+        "unique": false,
+        "where": "deleted_at IS NOT NULL"
+      }
+    }
+  },
+  "dispute": {
+    "columns": {
+      "id": {
+        "type": "text",
+        "nullable": false,
+        "primary": true
+      },
+      "mission_id": {
+        "type": "text",
+        "nullable": false,
+        "references": {
+          "table": "mission",
+          "column": "id",
+          "onDelete": "cascade"
+        }
+      },
+      "run_id": {
+        "type": "text",
+        "nullable": true
+      },
+      "opened_by": {
+        "type": "text",
+        "nullable": false
+      },
+      "reason": {
+        "type": "text",
+        "nullable": false,
+        "enum": [
+          "absent",
+          "not_conform",
+          "damaged",
+          "late",
+          "payment",
+          "behaviour",
+          "other"
+        ]
+      },
+      "message": {
+        "type": "text",
+        "nullable": false
+      },
+      "status": {
+        "type": "text",
+        "nullable": false,
+        "default": "'open'",
+        "enum": [
+          "open",
+          "resolved",
+          "rejected"
+        ]
+      },
+      "resolution": {
+        "type": "text",
+        "nullable": true
+      },
+      "resolved_by": {
+        "type": "text",
+        "nullable": true
+      },
+      "resolved_at": {
+        "type": "timestamptz",
+        "nullable": true
+      },
+      "created_at": {
+        "type": "timestamptz",
+        "nullable": false,
+        "default": "now()"
+      },
+      "updated_at": {
+        "type": "timestamptz",
+        "nullable": false,
+        "default": "now()"
+      },
+      "deleted_at": {
+        "type": "timestamptz",
+        "nullable": true
+      }
+    },
+    "indexes": {
+      "IDX_dispute_mission_id": {
+        "columns": [
+          "mission_id"
+        ],
+        "unique": false,
+        "where": "deleted_at IS NULL"
+      },
+      "IDX_dispute_opened_by": {
+        "columns": [
+          "opened_by"
+        ],
+        "unique": false,
+        "where": "deleted_at IS NULL"
+      },
+      "IDX_dispute_status": {
+        "columns": [
+          "status"
+        ],
+        "unique": false,
+        "where": "deleted_at IS NULL"
+      },
+      "IDX_dispute_deleted_at": {
+        "columns": [
+          "deleted_at"
+        ],
+        "unique": false,
+        "where": "deleted_at IS NOT NULL"
+      }
+    }
+  }
+}
