@@ -73,6 +73,8 @@ export function serializeMission(m: MissionRow, role: Role, urls: Record<string,
     photos: m.photos.map((id) => urls[id]).filter(Boolean),
     pickup: area(m.pickup),
     dropoff: area(m.dropoff),
+    /** The road between the two places above, as precise as they are. */
+    road_path: m.road_path ?? null,
     deadline: m.deadline,
     window_start: m.window_start,
     onsite_minutes: m.onsite_minutes,

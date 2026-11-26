@@ -103,6 +103,10 @@
         "type": "jsonb",
         "nullable": false
       },
+      "road_path": {
+        "type": "jsonb",
+        "nullable": true
+      },
       "pickup_note": {
         "type": "text",
         "nullable": true

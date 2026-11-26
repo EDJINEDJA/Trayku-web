@@ -1,5 +1,5 @@
 import { model, type AnyDmlEntity } from '@traiku/framework';
-import { MISSION_CATEGORIES, MISSION_MODES, MISSION_STATUSES, MISSION_TYPES, PROFESSIONS, SIZES, type ListingInfo, type DepositInfo, type HandoffInfo, type OrderInfo, type ParcelInfo, type Place, type PurchaseInfo, type SellerInfo, type SellerWindow } from '../types';
+import { MISSION_CATEGORIES, MISSION_MODES, MISSION_STATUSES, MISSION_TYPES, PROFESSIONS, SIZES, type ListingInfo, type DepositInfo, type HandoffInfo, type LatLng, type OrderInfo, type ParcelInfo, type Place, type PurchaseInfo, type SellerInfo, type SellerWindow } from '../types';
 import Dispute from './dispute';
 import Proposal from './proposal';
 import Run from './run';
@@ -28,6 +28,11 @@ const Mission = model.define('mission', {
   photos: model.json<string[]>().default([]),
   pickup: model.json<Place>(),
   dropoff: model.json<Place>(),
+  /**
+   * The road between the pickup and the drop-off as the public sees them (to about 1 km): drawn at once
+   * on the cards, never more exact than the places shown. Null until computed, or with no road.
+   */
+  road_path: model.json<LatLng[]>().nullable(),
   pickup_note: model.text().nullable(),
   dropoff_note: model.text().nullable(),
   /** Latest delivery; on site, end of the window. */

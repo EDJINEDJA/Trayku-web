@@ -412,6 +412,8 @@ export type Mission = {
   photos: string[];
   pickup: Place;
   dropoff: Place;
+  /** The road between pickup and drop-off as the public sees them (to about 1 km); null until computed. */
+  road_path: LatLng[] | null;
   deadline: string;
   window_start: string | null;
   onsite_minutes: number | null;
